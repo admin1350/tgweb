@@ -3,6 +3,7 @@
 ## Требования для сервера:
 - Свободный 80 и 443 порт
 - Статический ip желательно
+- A запись домена
 
 # 1. Создание ключа, через который будут подключаться устройства
 ```bash
@@ -56,11 +57,11 @@ Commercial support is available at
 # 4. Запуск установки и правка прав на директории
 ```bash
 sudo ./deploy/install.sh \
-  --hostname test1.sysadmin.name \
+  --hostname mysite.ru \
   --email admin@lord-mikrotik.ru \
   --site-dir ./site
 ```
-тут вводим dd(ваш ключ) который был сделан(то что не пишется какой ключ это нормально)
+Тут вводим dd(ваш ключ) который был сделан в п.1. при вводе в терминал, то что вы вводите не будет показываться.
 ## 4.1 Исправление прав 
 Исправьте права на всю цепочку директорий
 ```bash
@@ -75,4 +76,4 @@ sudo systemctl restart mtproxy
 sudo systemctl restart caddy
 ```
 Подключаемся и не забываем про `dd`:
-https://t.me/webproxy?server=proxy.example.org&secret=dd(Ваш ключ)
+https://t.me/webproxy?server=mysite.ru&secret=dd(Ваш ключ)
