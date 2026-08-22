@@ -1,24 +1,30 @@
-# tgweb
-Proxy web for telegram 
-# Создание ключа
+# Гайд по поднятию прокси для телеграмм через протокол WEB
+
+# Требования для сервера:
+- Свободный 80 и 443 порт
+- Статический ip желательнр
+# 1. Создание ключа, через который будут подключаться устройства
 ```bash
 openssl rand -hex 16
 ```
-# Клонирование официального репозиторрия 
+# 2. Клонирование официального репозиторрия 
 ```bash
 cd /tmp
 git clone https://github.com/telegramdesktop/tproxy-server.git
 ```
-# Танцы с бубном
-Почему то исходный файл не хочет работать по этому мы его правим
+# 3. Исправление багов в скрипте
+При попытке установить без данной правки будет возникать данная ошибка
+<img width="993" height="205" alt="изображение" src="https://github.com/user-attachments/assets/3138587e-304e-4c8c-81af-6f57e8a6e79c" />
+
 ```bash
 cd /tmp/tproxy-server
 sed -i 's|"\$go_binary" test \./\.\.|echo "Skipping tests (root environment quirk)"|' deploy/install.sh
 ```
-## Создаем заглушку для сайт
+# 3. Создание сайта заглушки
+
 ```bash
-mkdir site
-nano site/index.html
+mkdir /tmp/tproxy-server
+nano /tmp/tproxy-server/site/index.html
 ```
 *index.html*
 ```html
@@ -46,18 +52,26 @@ Commercial support is available at
 </body>
 </html>
 ```
-# Запуск установки
+# 4. Запуск установки и правка прав на директории
 ```bash
 sudo ./deploy/install.sh \
   --hostname test1.sysadmin.name \
   --email admin@lord-mikrotik.ru \
   --site-dir ./site
 ```
-тут вводим ddвашключ который был сделан(то что не пишется какой ключ это нормально)
-## продолжение танцев с бубном 
- Исправьте права на всю цепочку директорий
+тут вводим dd(ваш ключ) который был сделан(то что не пишется какой ключ это нормально)
+## 4.1 Исправление прав 
+Исправьте права на всю цепочку директорий
 ```bash
 sudo chmod 755 /opt
 sudo chmod -R 755 /opt/MTProxy
 sudo chown -R mtproxy:mtproxy /opt/MTProxy
 ```
+# 5. Перезапуск всех служб 
+```bash
+sudo systemctl restart tproxy-server
+sudo systemctl restart mtproxy
+sudo systemctl restart caddy
+```
+Подключаемся и не забываем про `dd`:
+https://t.me/webproxy?server=proxy.example.org&secret=dd(Ваш ключ)
