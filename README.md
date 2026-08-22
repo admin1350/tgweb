@@ -46,4 +46,18 @@ Commercial support is available at
 </body>
 </html>
 ```
-
+# Запуск установки
+```bash
+sudo ./deploy/install.sh \
+  --hostname test1.sysadmin.name \
+  --email admin@lord-mikrotik.ru \
+  --site-dir ./site
+```
+тут вводим ddвашключ который был сделан(то что не пишется какой ключ это нормально)
+## продолжение танцев с бубном 
+ Исправьте права на всю цепочку директорий
+```bash
+sudo chmod 755 /opt
+sudo chmod -R 755 /opt/MTProxy
+sudo chown -R mtproxy:mtproxy /opt/MTProxy
+```
