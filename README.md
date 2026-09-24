@@ -26,6 +26,7 @@ sed -i 's|"\$go_binary" test \./\.\.|echo "Skipping tests (root environment quir
 
 ```bash
 mkdir /tmp/tproxy-server
+mkdir /tmp/tproxy-server/site
 nano /tmp/tproxy-server/site/index.html
 ```
 *index.html*
